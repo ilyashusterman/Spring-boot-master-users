@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.zip.DataFormatException;
 
 /**
  * Created by ilya on 26/01/2017.
@@ -24,7 +25,7 @@ public class AuthController {
             produces = {"application/json", "application/xml"})
     @ResponseStatus(HttpStatus.ACCEPTED)
     public void loginUser(@RequestBody User user,
-                          HttpServletRequest request, HttpServletResponse response) {
+                          HttpServletRequest request, HttpServletResponse response) throws DataFormatException {
         // throw new DataFormatException("ID doesn't match!");
         System.out.println(user);
         userService.login(user.getUsername(),user.getPassword());
