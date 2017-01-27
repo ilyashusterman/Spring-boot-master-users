@@ -12,6 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import java.sql.SQLException;
+import java.util.zip.DataFormatException;
 
 /**
  * Created by ilya on 26/01/2017.
@@ -25,7 +26,7 @@ public class ExceptionHandlingController {
 
     // Convert a predefined exception to an HTTP Status code
     @ResponseStatus(value= HttpStatus.CONFLICT,
-            reason="Data integrity violation")  // 409
+            reason="Data integrity violation")  // 409 //DataFormatException
     @ExceptionHandler(DataIntegrityViolationException.class)
     public void conflict() {
         // Nothing to do
@@ -41,7 +42,17 @@ public class ExceptionHandlingController {
         // below.
         return "databaseError";
     }
-
+    @ResponseStatus(value= HttpStatus.NOT_FOUND,
+            reason="Data format violation")  // 409 //DataFormatException
+    @ExceptionHandler({DataFormatException.class})
+    public String userWrong() {
+        // Nothing to do.  Returns the logical view name of an error page, passed
+        // to the view-resolver(s) in usual way.
+        // Note that the exception is NOT available to this view (it is not added
+        // to the model) but see "Extending ExceptionHandlerExceptionResolver"
+        // below.
+        return "input error";
+    }
     // Total control - setup a model and return the view name yourself. Or
     // consider subclassing ExceptionHandlerExceptionResolver (see below).
     @ExceptionHandler(Exception.class)

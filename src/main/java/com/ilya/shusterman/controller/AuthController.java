@@ -25,7 +25,7 @@ public class AuthController {
             method = RequestMethod.POST,
             consumes = {"application/json", "application/xml"},
             produces = {"application/json", "application/xml"})
-    @ResponseStatus(HttpStatus.ACCEPTED)
+    @ResponseStatus(HttpStatus.OK)
     public void loginUser(@RequestBody User user,
                           @Autowired HttpServletRequest request, @Autowired HttpServletResponse response) throws DataFormatException {
         logger.debug("user",user);
@@ -47,7 +47,7 @@ public class AuthController {
     public String test(
             @Autowired HttpServletRequest request,@Autowired HttpServletResponse response) {
        return "test Auth controller";
-    }
+}
 
 
 }
