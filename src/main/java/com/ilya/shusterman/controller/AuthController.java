@@ -46,7 +46,6 @@ public class AuthController {
             method = RequestMethod.GET)
     public String test(
             @Autowired HttpServletRequest request,@Autowired HttpServletResponse response) {
-        // throw new DataFormatException("username and password doesn't match!");
        return "test Auth controller";
     }
 
