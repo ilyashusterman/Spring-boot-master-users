@@ -2,6 +2,7 @@ package com.ilya.shusterman.beans;
 
 import org.springframework.boot.jackson.JsonComponent;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
 
 /**
  * Created by ilya on 26/01/2017.
@@ -12,6 +13,7 @@ public class User {
     @Id
     public String id;
     public String type;
+    @Indexed(unique = true)
     public String userName;
     public String password;
 

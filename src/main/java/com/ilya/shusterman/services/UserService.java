@@ -19,6 +19,7 @@ import java.util.zip.DataFormatException;
 public class UserService {
 
     Logger logger = LoggerFactory.getLogger(UserService.class);
+
     @Autowired
     private UserRepository userRepository;
 
@@ -26,7 +27,7 @@ public class UserService {
         logger.debug(" userrepository  ",userRepository);
         logger.debug("username",username,"userRepository "+userRepository.findByUserName(username));
         User user = userRepository.findByUserName(username);
-       if( user!=null&&!user.getPassword().equals(password)) {
+       if((user==null) || (user!=null&&!user.getPassword().equals(password))) {
           throw new DataFormatException("username and password doesn't match!");
        }
        return user;
