@@ -1,10 +1,12 @@
 package com.ilya.shusterman.beans;
 
+import org.springframework.boot.jackson.JsonComponent;
 import org.springframework.data.annotation.Id;
 
 /**
  * Created by ilya on 26/01/2017.
  */
+@JsonComponent
 public class User {
 
     @Id
@@ -39,12 +41,12 @@ public class User {
         this.id = id;
     }
 
-    public String getUsername() {
+    public String getUserName() {
         return userName;
     }
 
-    public void setUsername(String username) {
-        this.userName = username;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public String getPassword() {
@@ -56,4 +58,11 @@ public class User {
         this.password = password;
     }
 
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
 }

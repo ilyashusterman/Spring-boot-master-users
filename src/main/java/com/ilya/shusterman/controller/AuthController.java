@@ -2,6 +2,8 @@ package com.ilya.shusterman.controller;
 
 import com.ilya.shusterman.beans.User;
 import com.ilya.shusterman.services.UserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -15,7 +17,7 @@ import java.util.zip.DataFormatException;
  */
 @RestController
 public class AuthController {
-
+    Logger logger = LoggerFactory.getLogger(AuthController.class);
     @Autowired
     private UserService userService;
 
@@ -25,21 +27,27 @@ public class AuthController {
             produces = {"application/json", "application/xml"})
     @ResponseStatus(HttpStatus.ACCEPTED)
     public void loginUser(@RequestBody User user,
-                          HttpServletRequest request, HttpServletResponse response) throws DataFormatException {
-        // throw new DataFormatException("ID doesn't match!");
-        System.out.println(user);
-        userService.login(user.getUsername(),user.getPassword());
+                          @Autowired HttpServletRequest request, @Autowired HttpServletResponse response) throws DataFormatException {
+        logger.debug("user",user);
+        user = userService.login(user.getUserName(),user.getPassword());
+        request.getSession(true).setAttribute("user", user);
         response.setHeader("User", request.getRequestURL().append("/").append(user.getId()).toString());
     }
-    @RequestMapping(value = "/testUser",
-            method = RequestMethod.GET,
-            produces = {"application/json", "application/xml"})
-    @ResponseStatus(HttpStatus.ACCEPTED)
-  public  User loginUser(
-                          HttpServletRequest request, HttpServletResponse response) {
-       // throw new DataFormatException("ID doesn't match!");
+    @RequestMapping(value = "/testlogin",
+            method = RequestMethod.GET
+            )
+  public User loginUser(
+            @Autowired HttpServletRequest request, @Autowired HttpServletResponse response) {
+       // throw new DataFormatException("username and password doesn't match!");
             User user = new User("admin", "username" , "password");
         return user;
+    }
+    @RequestMapping(value = "/test",
+            method = RequestMethod.GET)
+    public String test(
+            @Autowired HttpServletRequest request,@Autowired HttpServletResponse response) {
+        // throw new DataFormatException("username and password doesn't match!");
+       return "test Auth controller";
     }
 
 

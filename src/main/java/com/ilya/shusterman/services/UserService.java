@@ -1,6 +1,10 @@
 package com.ilya.shusterman.services;
 
+import com.ilya.shusterman.beans.User;
+import com.ilya.shusterman.controller.ExceptionHandlingController;
 import com.ilya.shusterman.repository.UserRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,15 +18,17 @@ import java.util.zip.DataFormatException;
 @Service
 public class UserService {
 
+    Logger logger = LoggerFactory.getLogger(UserService.class);
     @Autowired
     private UserRepository userRepository;
 
-    public boolean login(String username, String password) throws DataFormatException {
-        System.out.println(" userrepository  "+userRepository);
-        System.out.println(username+"=username="+userRepository.findByUserName(username));
-       if( !userRepository.findByUserName(username).getPassword().equals(password)) {
+    public User login(String username, String password) throws DataFormatException {
+        logger.debug(" userrepository  ",userRepository);
+        logger.debug("username",username,"userRepository "+userRepository.findByUserName(username));
+        User user = userRepository.findByUserName(username);
+       if( user!=null&&!user.getPassword().equals(password)) {
           throw new DataFormatException("username and password doesn't match!");
        }
-       return true;
+       return user;
     }
 }

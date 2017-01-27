@@ -20,7 +20,7 @@ import java.sql.SQLException;
 public class ExceptionHandlingController {
 
 
-
+        Logger logger = LoggerFactory.getLogger(ExceptionHandlingController.class);
     // Exception handling methods
 
     // Convert a predefined exception to an HTTP Status code
@@ -46,7 +46,7 @@ public class ExceptionHandlingController {
     // consider subclassing ExceptionHandlerExceptionResolver (see below).
     @ExceptionHandler(Exception.class)
     public ModelAndView handleError(HttpServletRequest req, Exception ex) {
-       // logger.error("Request: " + req.getRequestURL() + " raised " + ex);
+        logger.error("Request: " + req.getRequestURL() + " raised " + ex);
 
         ModelAndView mav = new ModelAndView();
         mav.addObject("exception", ex);
